@@ -24,7 +24,7 @@ export const weatherAgent = new Agent({
 });
 
 export const mtmaAgent = new Agent({
-  id: "mtma",
+  id: "mtma2",
   name: "MTMA Agent",
   instructions: `
     You are MTMA — a music-themed mood assistant.

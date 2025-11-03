@@ -39,3 +39,5 @@ export const mtmaAgent = new Agent({
 
 console.log("✅ Weather agent loaded");
 console.log("✅ MTMA agent loaded");
+
+// Trigger rebuild for mastra deploy

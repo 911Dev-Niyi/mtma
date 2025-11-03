@@ -1,0 +1,25 @@
+
+{
+  "active": true,
+  "category": "utilities",
+  "description": "MTMA — music-themed mood assistant",
+  "id": "mtma_workflow_001",
+  "long_description": "MTMA responds to emotional input and suggests music genres, artists, and playlists. It uses the musicTool to generate recommendations and links.",
+  "name": "mtma_agent",
+  "nodes": [
+    {
+      "id": "mtma_agent",
+      "name": "MTMA Agent",
+      "parameters": {},
+      "position": [100, 100],
+      "type": "a2a/mastra-a2a-node",
+      "typeVersion": 1,
+      "url": "https://telex-mastra.mastra.cloud/a2a/agent/mtmaAgent"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "short_description": "Suggests music based on mood"
+}

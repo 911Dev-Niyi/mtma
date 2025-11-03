@@ -1,25 +1,94 @@
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 
-interface GeocodingResponse {
-  results: {
-    latitude: number;
-    longitude: number;
-    name: string;
-  }[];
-}
-interface WeatherResponse {
-  current: {
-    time: string;
-    temperature_2m: number;
-    apparent_temperature: number;
-    relative_humidity_2m: number;
-    wind_speed_10m: number;
-    wind_gusts_10m: number;
-    weather_code: number;
-  };
-}
+//
+// 🎵 Playlist Links
+//
+const playlistLinks: Record<string, string> = {
+  sad: 'https://open.spotify.com/playlist/xyz123',
+  happy: 'https://open.spotify.com/playlist/abc456',
+  anxious: 'https://youtube.com/playlist/def789',
+  chill: 'https://boomplay.com/playlist/ghi101',
+  nostalgic: 'https://audiomack.com/playlist/jkl202',
+  angry: 'https://music.apple.com/playlist/mno303',
+};
 
+//
+// 🔧 Music Suggestion Logic
+//
+const getMusicSuggestion = (mood: string) => {
+  const normalizedMood = mood.toLowerCase();
+
+  const moodMap: Record<string, { genre: string; vibe: string; suggestion: string }> = {
+    happy: {
+      genre: 'Afrobeats',
+      vibe: 'Energetic & joyful',
+      suggestion: 'Try something from Burna Boy or Ayra Starr',
+    },
+    sad: {
+      genre: 'Soul',
+      vibe: 'Reflective & mellow',
+      suggestion: 'Maybe some Asa or Sade to ease the mood',
+    },
+    nostalgic: {
+      genre: 'Highlife',
+      vibe: 'Warm & retro',
+      suggestion: 'Check out Oliver De Coque or Osadebe',
+    },
+    angry: {
+      genre: 'Hip-hop',
+      vibe: 'Raw & expressive',
+      suggestion: 'Try Kendrick Lamar or Olamide',
+    },
+    chill: {
+      genre: 'Lo-fi',
+      vibe: 'Relaxed & ambient',
+      suggestion: 'Lo-fi beats playlist on Spotify or YouTube',
+    },
+    anxious: {
+      genre: 'Ambient',
+      vibe: 'Soothing & grounding',
+      suggestion: 'Try some soft piano or nature sounds',
+    },
+  };
+
+  const base = moodMap[normalizedMood] || {
+    genre: 'Eclectic',
+    vibe: 'Mixed emotions',
+    suggestion: 'Explore something new — maybe jazz or indie fusion',
+  };
+
+  const playlist = playlistLinks[normalizedMood] ?? null;
+
+  return {
+    ...base,
+    playlist,
+  };
+};
+
+//
+// 🎵 Music Tool
+//
+export const musicTool = createTool({
+  id: 'suggest-music',
+  description: 'Suggest music genres or moods based on emotional input',
+  inputSchema: z.object({
+    mood: z.string().describe('User mood or emotional state'),
+  }),
+  outputSchema: z.object({
+    genre: z.string(),
+    vibe: z.string(),
+    suggestion: z.string(),
+    playlist: z.string().nullable(),
+  }),
+  execute: async ({ context }) => {
+    return getMusicSuggestion(context.mood);
+  },
+});
+
+//
+// 🌦️ Weather Tool
+//
 export const weatherTool = createTool({
   id: 'get-weather',
   description: 'Get current weather for a location',
@@ -40,6 +109,25 @@ export const weatherTool = createTool({
   },
 });
 
+//
+// 🌍 Weather Logic
+//
+interface GeocodingResponse {
+  results: { latitude: number; longitude: number; name: string }[];
+}
+
+interface WeatherResponse {
+  current: {
+    time: string;
+    temperature_2m: number;
+    apparent_temperature: number;
+    relative_humidity_2m: number;
+    wind_speed_10m: number;
+    wind_gusts_10m: number;
+    weather_code: number;
+  };
+}
+
 const getWeather = async (location: string) => {
   const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(location)}&count=1`;
   const geocodingResponse = await fetch(geocodingUrl);
@@ -50,9 +138,7 @@ const getWeather = async (location: string) => {
   }
 
   const { latitude, longitude, name } = geocodingData.results[0];
-
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,weather_code`;
-
   const response = await fetch(weatherUrl);
   const data = (await response.json()) as WeatherResponse;
 
@@ -98,5 +184,6 @@ function getWeatherCondition(code: number): string {
     96: 'Thunderstorm with slight hail',
     99: 'Thunderstorm with heavy hail',
   };
+
   return conditions[code] || 'Unknown';
 }

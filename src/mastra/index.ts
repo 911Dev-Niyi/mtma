@@ -2,6 +2,7 @@ import { Mastra } from '@mastra/core/mastra';
 import { PinoLogger } from '@mastra/loggers';
 import { weatherWorkflow, mtmaWorkflow } from './workflows';
 import { weatherAgent, mtmaAgent } from './agents';
+import { a2aAgentRoute } from './routes/a2a-agent-route';
 
 export const mastra = new Mastra({
   workflows: {
@@ -12,6 +13,7 @@ export const mastra = new Mastra({
     weatherAgent,
     mtmaAgent,
   },
+  server: { apiRoutes: [a2aAgentRoute]},
   logger: new PinoLogger({
     name: 'Mastra',
     level: 'info',
@@ -21,4 +23,7 @@ export const mastra = new Mastra({
       enabled: true,
     },
   },
+  telemetry: {
+    enabled: false,
+  }
 });

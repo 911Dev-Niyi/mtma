@@ -1,8 +1,7 @@
-// mastra.config.ts
-import { mtmaAgent } from './src/mastra/agents'; // adjust path if needed
+import { mtmaAgent } from './src/mastra/agents'
 
 export const config = {
   agents: {
-    mtma2: mtmaAgent,
-  },
-};
+    mtma2: mtmaAgent
+  }
+}

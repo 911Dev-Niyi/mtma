@@ -1,9 +1,7 @@
-import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
+import { createTool } from '@mastra/core';
+import { parseMood } from '../utils/moodParser';
 
-//
-// 🎵 Playlist Links
-//
 const playlistLinks: Record<string, string> = {
   sad: 'https://open.spotify.com/playlist/xyz123',
   happy: 'https://open.spotify.com/playlist/abc456',
@@ -13,9 +11,6 @@ const playlistLinks: Record<string, string> = {
   angry: 'https://music.apple.com/playlist/mno303',
 };
 
-//
-// 🔧 Music Suggestion Logic
-//
 const getMusicSuggestion = (mood: string) => {
   const normalizedMood = mood.toLowerCase();
 
@@ -66,9 +61,6 @@ const getMusicSuggestion = (mood: string) => {
   };
 };
 
-//
-// 🎵 Music Tool
-//
 export const musicTool = createTool({
   id: 'suggest-music',
   description: 'Suggest music genres or moods based on emotional input',
@@ -82,9 +74,11 @@ export const musicTool = createTool({
     playlist: z.string().nullable(),
   }),
   execute: async ({ context }) => {
-    return getMusicSuggestion(context.mood);
+    const parsedMood = parseMood(context.mood);
+    return getMusicSuggestion(parsedMood);
   },
 });
+
 
 //
 // 🌦️ Weather Tool

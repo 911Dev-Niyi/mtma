@@ -1,22 +1,20 @@
-# Weather Agent Template
+# MTMA — Mood-Themed Music Assistant 🎵
 
-This is a template project that demonstrates how to create a weather agent using the Mastra framework. The agent can provide weather information and forecasts based on user queries.
+MTMA is an AI-powered agent that recommends music based on your emotional state. It understands slang, tone, and indirect expressions to infer your mood and suggest the perfect vibe.
 
-## Overview
+## Features
+- 🎧 Mood inference from expressive language
+- 🎵 Genre, vibe, artist, and playlist suggestions
+- 🤖 Built with Mastra AI framework
+- 🧠 Memory-ready (Turso or other stores)
 
-The Weather Agent template showcases how to:
+## How It Works
+1. User expresses a mood (e.g. "I'm sha vibing hard")
+2. MTMA infers the mood using a shared mood map
+3. It invokes the `musicTool` to generate suggestions
+4. Returns genre, vibe, artist, and playlist link
 
-- Create an AI-powered agent using Mastra framework
-- Implement weather-related workflows
-- Handle user queries about weather conditions
-- Integrate with OpenAI's API for natural language processing
-
-## Setup
-
-1. Copy `.env.example` to `.env` and fill in your API keys.
-2. Install dependencies: `pnpm install`
-3. Run the project: `pnpm dev`.
-
-## Environment Variables
-
-- `OPENAI_API_KEY`: Your OpenAI API key. [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+## Dev Setup
+```bash
+npm install
+npm run dev

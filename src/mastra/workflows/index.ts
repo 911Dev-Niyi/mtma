@@ -222,7 +222,7 @@ const suggestMusic = createStep({
 });
 
 const mtmaWorkflow = createWorkflow({
-  id: 'mtma-workflow',
+  id: 'mtma2-workflow',
   inputSchema: z.object({
     mood: z.string().describe('User mood or emotional state'),
   }),

@@ -1,6 +1,6 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { Agent } from '@mastra/core/agent';
-import { weatherTool, musicTool } from '../tools';
+import { musicTool } from '../tools';
 import { Memory } from '@mastra/memory';
 import { LibSQLStore } from '@mastra/libsql';
 const provider = createGoogleGenerativeAI({
@@ -8,21 +8,6 @@ const provider = createGoogleGenerativeAI({
 });
 
 const llm = provider.chat('gemini-2.5-flash');
-
-export const weatherAgent = new Agent({
-  id: "weather",
-  name: "Weather Agent",
-  instructions: `
-    You are a helpful weather assistant that provides accurate weather information.
-    Always ask for a location if none is provided.
-    Translate non-English location names.
-    Include humidity, wind, and precipitation.
-    Keep responses concise but informative.
-    Use the weatherTool to fetch current weather data.
-  `,
-  model: llm,
-  tools: { weatherTool },
-});
 
 export const mtmaAgent = new Agent({
   id: "mtma2",
@@ -46,7 +31,6 @@ Keep responses empathetic, creative, and vibe-aware. Always match the user's ene
   })
 });
 
-console.log("✅ Weather agent loaded");
 console.log("✅ MTMA agent loaded");
 
 // Trigger rebuild for mastra deploy

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "mastra dev",
-    "start":"mastra dev"
+    "start": "mastra dev"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "@mastra/libsql": "^0.16.1",
     "@mastra/loggers": "latest",
     "@mastra/memory": "^0.15.10",
+    "sentiment": "^5.0.2",
     "zod": "^3.25.76"
   },
   "devDependencies": {
